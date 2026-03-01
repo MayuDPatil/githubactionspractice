@@ -1,0 +1,38 @@
+# Name of the workflow (shown in GitHub Actions tab)
+name: Simple CI Workflow
+
+# When should this workflow run?
+on:
+  push:              # Run when code is pushed
+    branches:
+      - main         # Only when pushing to the main branch
+  pull_request:      # Also run when a PR is created targeting main
+    branches:
+      - main
+
+# A workflow contains one or more jobs
+jobs:
+  build:
+    # The type of machine to run the job on
+    runs-on: ubuntu-latest
+
+    # Steps are executed in order
+    steps:
+
+      # Step 1: Download your repository code
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Step 2: Install Node.js
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18   # Choose Node version here
+
+      # Step 3: Install project dependencies
+      - name: Install dependencies
+        run: npm install     # Runs this command in the terminal
+
+      # Step 4: Run tests
+      - name: Run tests
+        run: npm test        # Make sure you have "test" in package.json
