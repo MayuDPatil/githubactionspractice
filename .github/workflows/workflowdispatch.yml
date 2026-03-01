@@ -1,0 +1,19 @@
+name: dispatch
+on:
+  workflow_dispatch: null
+  jobs:
+    code:
+      runs-on: ubuntu-latest
+      steps:
+        - name: checkout code
+          run: echo "code clone from Github"
+    build:
+      runs-on: ubuntu-latest
+      steps:
+        - name: build the code
+          run: echo "build the code through docker"
+    test:
+      runs-on: ubuntu-latest
+      steps:
+        - name: test the code
+          run: echo "test the code"
