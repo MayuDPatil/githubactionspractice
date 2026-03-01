@@ -1,4 +1,6 @@
+# name of the workflow
 name: Hello
+
 
 on:
   push:
@@ -7,8 +9,10 @@ on:
 
 jobs:
 
+# name of the job
  greet:
 
+ # 
   runs-on: ubuntu-latest
   steps:
      - name : say hello
@@ -16,3 +20,9 @@ jobs:
 
      - name:  say hello username
        run: echo "$user"
+
+ versionpython:
+   runs-on: ubuntu-latest
+   steps:
+     - name: knwo the python vserion
+       run: python --version
