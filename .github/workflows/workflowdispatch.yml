@@ -1,7 +1,7 @@
 name: dispatch
 on:
   workflow_dispatch: null
-  jobs:
+jobs:
     code:
       runs-on: ubuntu-latest
       steps:
