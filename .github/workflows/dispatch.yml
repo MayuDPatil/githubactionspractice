@@ -1,0 +1,35 @@
+# name of the workflow
+name: dispatch
+
+on:
+  workflow_dispatch:
+
+ jobs:
+
+   # jobs name
+   code:
+     # where this job should run (it is called github runner)
+     runs-on: ubuntu-latest
+     steps:
+        name: checkout code
+        run: echo "code clone from Github"
+
+   # 2nd job build
+   build:
+     # each job need runner where this job runs
+     runs-on: ubuntu-latest
+     # inthis build the code
+     steps:
+        name: build the code
+        run: echo "build the code through docker"
+
+  #3rd job
+   test:
+      #ubuntu-latest is runner at every job we need runner because if the build has heavy job to run then it will take time so it is called parallisiam
+     runs-on: ubuntu-latest
+
+     steps:
+        name: test the code
+        run: echo "test the code"
+     
+ 
