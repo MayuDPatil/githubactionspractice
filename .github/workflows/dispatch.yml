@@ -11,8 +11,8 @@ on:
      # where this job should run (it is called github runner)
      runs-on: ubuntu-latest
      steps:
-        name: checkout code
-        run: echo "code clone from Github"
+        - name: checkout code
+          run: echo "code clone from Github"
 
    # 2nd job build
    build:
@@ -20,8 +20,8 @@ on:
      runs-on: ubuntu-latest
      # inthis build the code
      steps:
-        name: build the code
-        run: echo "build the code through docker"
+        - name: build the code
+          run: echo "build the code through docker"
 
   #3rd job
    test:
@@ -29,7 +29,7 @@ on:
      runs-on: ubuntu-latest
 
      steps:
-        name: test the code
-        run: echo "test the code"
+        - name: test the code
+          run: echo "test the code"
      
  
