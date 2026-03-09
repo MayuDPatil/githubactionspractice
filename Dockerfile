@@ -18,4 +18,4 @@ COPY --from=builder /app /app
 
 ENV PYTHONPATH=/app/dependency
 
-CMD ["python", "main.py"]
+CMD ["main.py"]
