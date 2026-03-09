@@ -1,6 +1,6 @@
 services:
   web:
-    image: ${{DOCKERHUB_USER}}/github-actions-practice:latest
+    image: ${DOCKERHUB_USER}/github-actions-practice:latest
     ports:
       - "5000:5000"
     
