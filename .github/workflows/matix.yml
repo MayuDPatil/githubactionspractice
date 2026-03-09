@@ -9,15 +9,20 @@ on:
 jobs:
     validate:
         runs-on: ubuntu-latest
+        strategy:
+            fail-fast: false
+            matrix:
+                python-version: [3.10, 3.11, 3.12]
+
 
         steps:
         - name: checkout code
           uses: actions/checkout@v4
 
-        - name: setup python
+        - name: setup python ${{matrix.python-version}}
           uses: actions/setup-python@v4
           with:
-              python-version: "3.10"
+              python-version: ${{matrix.python-version}}
 
         - name: install dependencies
           run: pip insatll -r requiremnts.txt
