@@ -1,8 +1,12 @@
 #!/usr/bin/env python3
 """
-Simple Python Project
-A basic application for GitHub Actions practice.
+Flask Web Application
+A simple web app for GitHub Actions practice.
 """
+
+from flask import Flask, render_template, request, jsonify
+
+app = Flask(__name__, template_folder=".", static_folder="static")
 
 
 def greet(name: str) -> str:
@@ -15,13 +19,28 @@ def calculate_sum(numbers: list[int]) -> int:
     return sum(numbers)
 
 
-def main():
-    """Main entry point."""
-    print("Welcome to the Python Project!")
-    print(greet("GitHub Actions"))
-    result = calculate_sum([1, 2, 3, 4, 5])
-    print(f"Sum of [1, 2, 3, 4, 5] = {result}")
+@app.route("/")
+def home():
+    """Render the home page."""
+    return render_template("index.html")
+
+
+@app.route("/api/greet", methods=["POST"])
+def api_greet():
+    """API endpoint to greet."""
+    data = request.json
+    name = data.get("name", "World")
+    return jsonify({"message": greet(name)})
+
+
+@app.route("/api/sum", methods=["POST"])
+def api_sum():
+    """API endpoint to calculate sum."""
+    data = request.json
+    numbers = data.get("numbers", [])
+    result = calculate_sum(numbers)
+    return jsonify({"result": result, "numbers": numbers})
 
 
 if __name__ == "__main__":
-    main()
+    app.run(host="0.0.0.0", port=5000, debug=False)

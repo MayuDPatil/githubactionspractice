@@ -2,198 +2,234 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Your Name | Portfolio</title>
+    <title>Python Flask App | GitHub Actions</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: Arial, sans-serif;
         }
 
         body {
-            background: #0f172a;
-            color: #ffffff;
-            scroll-behavior: smooth;
-        }
-
-        header {
-            background: #111827;
-            padding: 20px 50px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            position: fixed;
-            width: 100%;
-            top: 0;
-        }
-
-        header h1 {
-            color: #38bdf8;
-        }
-
-        nav a {
-            color: white;
-            text-decoration: none;
-            margin-left: 20px;
-            transition: 0.3s;
-        }
-
-        nav a:hover {
-            color: #38bdf8;
-        }
-
-        section {
-            padding: 100px 50px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
-        }
-
-        .hero {
             display: flex;
             justify-content: center;
             align-items: center;
-            flex-direction: column;
-            text-align: center;
+            padding: 20px;
         }
 
-        .hero h2 {
-            font-size: 48px;
-        }
-
-        .hero span {
-            color: #38bdf8;
-        }
-
-        .btn {
-            margin-top: 20px;
-            padding: 10px 20px;
-            border: none;
-            background: #38bdf8;
-            color: black;
-            cursor: pointer;
-            font-weight: bold;
-            border-radius: 5px;
-        }
-
-        .about, .skills, .projects, .contact {
-            background: #1e293b;
-            margin-top: 20px;
+        .container {
+            background: white;
             border-radius: 10px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            padding: 40px;
+            max-width: 500px;
+            width: 100%;
         }
 
-        .card {
-            background: #334155;
-            padding: 20px;
-            margin: 10px 0;
-            border-radius: 8px;
-        }
-
-        footer {
+        h1 {
+            color: #333;
             text-align: center;
-            padding: 20px;
-            background: #111827;
+            margin-bottom: 30px;
+            font-size: 28px;
         }
 
-        @media(max-width: 768px) {
-            .hero h2 {
-                font-size: 32px;
-            }
+        .section {
+            margin-bottom: 30px;
+        }
+
+        .section h2 {
+            color: #667eea;
+            font-size: 18px;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        .input-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            color: #555;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+            font-family: inherit;
+        }
+
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 5px rgba(102, 126, 234, 0.3);
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background: #764ba2;
+        }
+
+        .result {
+            background: #f0f4ff;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 15px;
+            display: none;
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+
+        .result.show {
+            display: block;
+        }
+
+        .result-text {
+            color: #333;
+            font-size: 15px;
+            line-height: 1.6;
+        }
+
+        .status {
+            text-align: center;
+            margin-top: 20px;
+            padding: 10px;
+            border-radius: 5px;
+            display: none;
+        }
+
+        .status.success {
+            display: block;
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status.error {
+            display: block;
+            background: #f8d7da;
+            color: #721c24;
         }
     </style>
 </head>
 <body>
+    <div class="container">
+        <h1>🚀 Flask App</h1>
 
-<header>
-    <h1>YourName</h1>
-    <nav>
-        <a href="#home">Home</a>
-        <a href="#about">About</a>
-        <a href="#skills">Skills</a>
-        <a href="#projects">Projects</a>
-        <a href="#contact">Contact</a>
-    </nav>
-</header>
+        <!-- Greet Section -->
+        <div class="section">
+            <h2>👋 Greet Someone</h2>
+            <div class="input-group">
+                <label for="greetName">Enter a name:</label>
+                <input type="text" id="greetName" placeholder="e.g., GitHub Actions" value="GitHub Actions">
+            </div>
+            <button onclick="sendGreeting()">Send Greeting</button>
+            <div id="greetResult" class="result">
+                <div class="result-text" id="greetMessage"></div>
+            </div>
+        </div>
 
-<section id="home" class="hero">
-    <h2>Hello, I'm <span>Your Name</span></h2>
-    <p>Aspiring Developer | Tech Enthusiast | Portfolio Builder</p>
-    <button class="btn" onclick="scrollToSection('projects')">View My Work</button>
-</section>
+        <!-- Sum Section -->
+        <div class="section">
+            <h2>🧮 Calculate Sum</h2>
+            <div class="input-group">
+                <label for="numbersList">Enter numbers (comma-separated):</label>
+                <textarea id="numbersList" placeholder="e.g., 1,2,3,4,5" rows="3">1,2,3,4,5</textarea>
+            </div>
+            <button onclick="calculateSum()">Calculate Sum</button>
+            <div id="sumResult" class="result">
+                <div class="result-text" id="sumMessage"></div>
+            </div>
+        </div>
 
-<section id="about" class="about">
-    <h2>About Me</h2>
-    <div class="card">
-        <p>
-            I am currently building my portfolio website as part of my web development journey.
-            I enjoy working with HTML, CSS, and JavaScript and continuously improving my skills.
-        </p>
+        <div id="status" class="status"></div>
     </div>
-</section>
 
-<section id="skills" class="skills">
-    <h2>Skills</h2>
-    <div class="card">HTML5</div>
-    <div class="card">CSS3</div>
-    <div class="card">JavaScript</div>
-    <div class="card">Responsive Design</div>
-</section>
+    <script>
+        async function sendGreeting() {
+            const name = document.getElementById('greetName').value || 'World';
+            const statusDiv = document.getElementById('status');
+            statusDiv.className = 'status';
+            statusDiv.textContent = 'Loading...';
 
-<section id="projects" class="projects">
-    <h2>Projects</h2>
-    <div class="card">
-        <h3>Project One</h3>
-        <p>Dummy portfolio project showcasing responsive layout.</p>
-    </div>
-    <div class="card">
-        <h3>Project Two</h3>
-        <p>Basic JavaScript interactive webpage.</p>
-    </div>
-</section>
-
-<section id="contact" class="contact">
-    <h2>Contact</h2>
-    <div class="card">
-        <p>Email: yourname@email.com</p>
-        <p>LinkedIn: linkedin.com/in/yourname</p>
-        <p>GitHub: github.com/yourname</p>
-    </div>
-</section>
-
-<footer>
-    © 2026 Your Name | All Rights Reserved
-</footer>
-
-<script>
-    function scrollToSection(id) {
-        document.getElementById(id).scrollIntoView({
-            behavior: "smooth"
-        });
-    }
-
-    // Highlight active nav link on scroll
-    window.addEventListener("scroll", () => {
-        const sections = document.querySelectorAll("section");
-        const navLinks = document.querySelectorAll("nav a");
-
-        let current = "";
-
-        sections.forEach(section => {
-            const sectionTop = section.offsetTop - 150;
-            if (pageYOffset >= sectionTop) {
-                current = section.getAttribute("id");
+            try {
+                const response = await fetch('/api/greet', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ name: name })
+                });
+                const data = await response.json();
+                document.getElementById('greetMessage').textContent = data.message;
+                document.getElementById('greetResult').classList.add('show');
+                statusDiv.className = 'status success';
+                statusDiv.textContent = '✓ Success!';
+            } catch (error) {
+                statusDiv.className = 'status error';
+                statusDiv.textContent = '✗ Error: ' + error.message;
             }
-        });
+        }
 
-        navLinks.forEach(link => {
-            link.style.color = "white";
-            if (link.getAttribute("href").includes(current)) {
-                link.style.color = "#38bdf8";
+        async function calculateSum() {
+            const input = document.getElementById('numbersList').value;
+            const numbers = input.split(',').map(n => parseFloat(n.trim())).filter(n => !isNaN(n));
+            const statusDiv = document.getElementById('status');
+            statusDiv.className = 'status';
+            statusDiv.textContent = 'Loading...';
+
+            if (numbers.length === 0) {
+                statusDiv.className = 'status error';
+                statusDiv.textContent = '✗ Please enter valid numbers';
+                return;
             }
-        });
-    });
-</script>
 
+            try {
+                const response = await fetch('/api/sum', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ numbers: numbers })
+                });
+                const data = await response.json();
+                document.getElementById('sumMessage').textContent = 
+                    `Numbers: ${data.numbers.join(', ')}\nSum: ${data.result}`;
+                document.getElementById('sumResult').classList.add('show');
+                statusDiv.className = 'status success';
+                statusDiv.textContent = '✓ Success!';
+            } catch (error) {
+                statusDiv.className = 'status error';
+                statusDiv.textContent = '✗ Error: ' + error.message;
+            }
+        }
+
+        // Allow Enter key to submit
+        document.getElementById('greetName').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') sendGreeting();
+        });
+        document.getElementById('numbersList').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') calculateSum();
+        });
+    </script>
 </body>
 </html>
