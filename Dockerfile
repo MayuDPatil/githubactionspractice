@@ -8,7 +8,7 @@ RUN pip install --no-cache-dir --target=dependency -r requirements.txt
 
 COPY . .
 
-FROM grcr.io/distroless/python3-debian12
+FROM gcr.io/distroless/python3
 
 WORKDIR /app
 
