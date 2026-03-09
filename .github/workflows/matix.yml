@@ -25,7 +25,7 @@ jobs:
               python-version: ${{matrix.python-version}}
 
         - name: install dependencies
-          run: pip insatll -r requiremnts.txt
+          run: pip install -r requirements.txt
 
         - name: run linter
           run: flake8 main.py
