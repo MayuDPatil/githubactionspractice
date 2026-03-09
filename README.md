@@ -21,6 +21,7 @@ A simple Python project for practicing GitHub Actions.
 ### Installation
 
 1. Create a virtual environment:
+
    ```bash
    python -m venv venv
    ```
@@ -61,11 +62,13 @@ pytest --cov=. test_main.py
 ## Code Quality
 
 Format code with Black:
+
 ```bash
 black main.py test_main.py
 ```
 
 Check style with Flake8:
+
 ```bash
 flake8 main.py test_main.py
 ```

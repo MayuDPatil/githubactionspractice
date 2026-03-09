@@ -16,6 +16,6 @@ COPY --from=builder /app/dependency /app/dependency
 
 COPY --from=builder /app /app
 
-ENV pythonpath = /app/dependency
+ENV PYTHONPATH=/app/dependency
 
-CMD ["app.py"]
+CMD ["python", "main.py"]
