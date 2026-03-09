@@ -14,7 +14,7 @@ WORKDIR /app
 
 COPY --from=builder /app/dependency /app/dependency
 
-COPY /app /app
+COPY --from=builder /app /app
 
 ENV pythonpath = /app/dependency
 
