@@ -1,11 +1,7 @@
 name: docker build and push
 
 on : 
-    push:
-        branches:
-            - main
-            - requirements.txt
-    workflow_dispatch:
+    workflow_call:
 
 jobs:
     build-and-push:
