@@ -25,7 +25,7 @@ jobs:
               run: docker-compose -f docker-compose.yml up -d --build
 
             - name: check logs
-              run: docker compose logs
+              run: docker-compose logs
 
             - name: verify deployment
               run: docker ps
