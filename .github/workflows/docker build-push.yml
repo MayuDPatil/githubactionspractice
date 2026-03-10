@@ -10,7 +10,8 @@ on :
 jobs:
     build-and-push:
         runs-on: ubuntu-latest
-
+        env:
+            DOCKER_TAG: ${{ githunb.sha }}
         steps:
             - name: checkout code
               uses: actions/checkout@v4
@@ -26,4 +27,4 @@ jobs:
               with:
                 context: .
                 push : true
-                tags: ${{vars.dockerhub_username}}/github-actions-practice:latest
+                tags: ${{vars.dockerhub_username}}/github-actions-practice:${{env.DOCKER_TAG}}
