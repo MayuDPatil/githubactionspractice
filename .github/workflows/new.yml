@@ -1,7 +1,8 @@
 name: python lint
 
 on:
-    push:
+    # push:
+    workflow_dispatch:
 
 jobs:
     #jobname
