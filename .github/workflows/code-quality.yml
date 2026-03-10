@@ -1,0 +1,32 @@
+# linter sast scan workflow
+name: code quality
+
+on:
+    workflow_call:
+
+jobs:
+    code-quality:
+        runs-on: ubuntu-latest
+        strategy:
+            fail-fast: false 
+            matrix:
+                python-version: [3.11, 3.12, 3.13]
+
+
+        steps:
+            - name: checkout code
+              uses: actions/checkout@v4
+
+            - name: set up python ${{matrix.python-version}}
+              uses: actions/setup-python@v4
+              with:
+                python-version: ${{matrix.python-version}}
+
+            - name: install dependencies
+              run: pip install -r requirements.txt
+            
+            - name: run linter
+              run: flake8 app.py
+
+            - name: run security scan
+              run: bandit -r app.py
