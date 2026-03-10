@@ -3,6 +3,7 @@ Unit tests for the Flask app.
 """
 
 import json
+import pytest
 from main import app
 
 
