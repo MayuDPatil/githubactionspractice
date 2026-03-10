@@ -22,7 +22,7 @@ jobs:
               run: docker compose down || true
 
             - name: build and deploy with docker compose
-              run: docker compose -f docker-compose.yml up -d --build
+              run: docker-compose -f docker-compose.yml up -d --build
 
             - name: check logs
               run: docker compose logs
