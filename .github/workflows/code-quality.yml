@@ -26,7 +26,7 @@ jobs:
               run: pip install -r requirements.txt
             
             - name: run linter
-              run: flake8 app.py
+              run: flake8 main.py
 
             - name: run security scan
-              run: bandit -r app.py
+              run: bandit -r main.py
