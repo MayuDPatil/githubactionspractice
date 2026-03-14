@@ -18,6 +18,6 @@ jobs:
     docker-deploy:
             uses: ./.github/workflows/docker-deploy.yml
     docker-compose-deploy:
-            uses: ./.github/workflows/docker-build.push.yml
+            uses: ./.github/workflows/docker-build-push.yml
     
     
