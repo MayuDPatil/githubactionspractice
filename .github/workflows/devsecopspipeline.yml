@@ -1,7 +1,8 @@
 name: devsecopspipeline
 
 on: 
-    workflow_dispatch:
+    push:
+        branches: [main]
 
 jobs:
 
@@ -19,7 +20,7 @@ jobs:
             needs: [code-quality, secret-scan, docker-scan, dependency-scan]
             uses: ./.github/workflows/docker-build-push.yml
             secrets: inherit
-            
+
     image-scan:
             needs: [image-build-push]
             uses: ./.github/workflows/image-scan.yml
