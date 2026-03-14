@@ -9,8 +9,8 @@ jobs:
 
         steps:
 
-           - name: code checkout
-             uses: actions/checkout@v4
+            - name: code checkout
+              uses: actions/checkout@v4
 
               # once the image is built and pushed to docker hub, we can scan it with trivy and to do that we need to login to docker hub first
             - name: login to docker hub
