@@ -17,7 +17,7 @@ jobs:
                 password: ${{secrets.dockerhub_token}}
 
             - name: scan image with trivy
-              uses: aquasecurity/trivy-action@v0
+              uses: aquasecurity/trivy-action@0.28.0
               with:
                 severity: CRITICAL
                 exit-code: '1'
