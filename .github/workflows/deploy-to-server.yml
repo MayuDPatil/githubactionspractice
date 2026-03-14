@@ -10,8 +10,11 @@ jobs:
             - name: deploy-to-server
               uses: appleboy/ssh-action@master
               with:
-                host: ${{ secrets.HOST }}
+                host: ${{ secrets.ec2_HOST }}
                 username: ${{ secrets.USERNAME }}
-                password: ${{ secrets.PASSWORD }}
-                port: ${{ secrets.PORT }}
+                Key: ${{ secrets.PRIVATE_KEY }}
+                script: |
+                   echo "Deploying to server..."
+                   mkdir -p devops
+                
 
