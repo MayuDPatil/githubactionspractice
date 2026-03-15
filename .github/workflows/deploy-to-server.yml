@@ -47,8 +47,9 @@ jobs:
             export DOCKER_TAG=${{ github.sha }}
 
             echo "${{ secrets.DOCKERHUB_TOKEN }}" | sudo docker login \
-            --username "${{ vars.DOCKERHUB_USERNAME }}" \
-            --password-stdin
+              --username "${{ vars.DOCKERHUB_USERNAME }}" \
+              --password-stdin
 
             sudo docker compose pull
             sudo docker compose up -d --force-recreate
+            sudo docker image prune -f
