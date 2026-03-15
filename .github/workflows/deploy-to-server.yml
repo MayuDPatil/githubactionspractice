@@ -28,6 +28,7 @@ jobs:
                 Key: ${{ secrets.PRIVATE_KEY }}
                 source: "docker-compose.yml"
                 target: "~/devops/"
+                overwrite: true
 
             - name: run docker compose on server
               uses: appleboy/ssh-action@v1
