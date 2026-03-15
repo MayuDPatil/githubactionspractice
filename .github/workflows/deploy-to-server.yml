@@ -1,52 +1,52 @@
-name: sshtoserver
+# this will deploy the safe / secure / tested app to Prod server
+name: Deploy To Server
 
 on: 
     workflow_call:
 
+
 jobs:
     deploy:
         runs-on: ubuntu-latest
+        env:
+            DOCKERHUB_USER: ${{ vars.DOCKERHUB_USER }}
+            DOCKER_TAG: ${{ github.sha }}
+
         steps:
-            - name: code checkout
+            - name: Checkout code
               uses: actions/checkout@v4
 
-            - name: deploy-to-server
-              uses: appleboy/ssh-action@v1
+            - name: SSH to Prod server & create app folder
+              uses: appleboy/ssh-action@v1.0.3
               with:
-                host: ${{ secrets.ec2_HOST }}
-                username: ${{ secrets.USERNAME }}
-                Key: ${{ secrets.PRIVATE_KEY }}
+                host: ${{ secrets.EC2_SSH_HOST }}
+                username: ${{ secrets.EC2_SSH_USER }}
+                key: ${{ secrets.EC2_SSH_PRIVATE_KEY }}
                 script: |
-                   echo "Deploying to server..."
-                   mkdir -p devops
-            
-            - name: copy docker compose file to server
+                 echo "Installing required packages & folders"
+                 sudo apt-get update && sudo apt-get install docker.io docker-compose-v2 -y
+                 sudo usermod -aG docker $USER
+                 mkdir -p devops
+
+            - name: Copy the docker-compose file
               uses: appleboy/scp-action@v1
               with:
-                host: ${{ secrets.ec2_HOST }}
-                username: ${{ secrets.USERNAME }}
-                Key: ${{ secrets.PRIVATE_KEY }}
-                source: "docker-compose.yml"
-                target: "~/devops/"
-                overwrite: true
-
-            - name: run docker compose on server
-              uses: appleboy/ssh-action@v1
+                host: ${{ secrets.EC2_SSH_HOST }}
+                username: ${{ secrets.EC2_SSH_USER }}
+                key: ${{ secrets.EC2_SSH_PRIVATE_KEY }}
+                source: docker-compose.yml
+                target: ~/devops
+                
+            - name: SSH to Prod server & run the app
+              uses: appleboy/ssh-action@v1.0.3
               with:
-                host: ${{ secrets.ec2_HOST }}
-                username: ${{ secrets.USERNAME }}
-                Key: ${{ secrets.PRIVATE_KEY }}
+                host: ${{ secrets.EC2_SSH_HOST }}
+                username: ${{ secrets.EC2_SSH_USER }}
+                key: ${{ secrets.EC2_SSH_PRIVATE_KEY }}
                 script: |
-                     echo "Running docker compose on server..."
-
-                     sudo apt-get update
-                     sudo apt-get install -y docker.io docker-compose
-
-                     sudo systemctl start docker
-                     sudo systemctl enable docker
-
-                     echo "${{ secrets.DOCKERHUB_TOKEN }}" | sudo docker login -u "${{ vars.DOCKERHUB_USERNAME }}" --password-stdin
-
-                     cd ~/devops
-                     sudo docker-compose up -d --build --force-recreate --pull always
-
+                 echo "Running App"
+                
+                 export DOCKERHUB_USER=${{ vars.DOCKERHUB_USER }}
+                 export DOCKER_TAG=${{ github.sha }}
+                 echo ${{ secrets.DOCKERHUB_TOKEN }} | docker login --username ${{ vars.DOCKERHUB_USERNAME }} --password-stdin
+                 cd ~/devops && docker compose down && docker compose up -d --build --force-recreate --pull always
