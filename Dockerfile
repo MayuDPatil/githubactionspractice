@@ -20,4 +20,4 @@ ENV PYTHONPATH=/app/dependency
 
 EXPOSE 5000
 
-CMD ["gunicorn", "-b", "0.0.0.0:5000", "main:app"]
+CMD ["-m", "gunicorn", "-b", "0.0.0.0:5000", "main:app"]
