@@ -40,8 +40,3 @@ def api_sum():
     numbers = data.get("numbers", [])
     result = calculate_sum(numbers)
     return jsonify({"result": result, "numbers": numbers})
-
-
-@app.route("/")
-def home():
-    return "Hello from CI/CD!"
