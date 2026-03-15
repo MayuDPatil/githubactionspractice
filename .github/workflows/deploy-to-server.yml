@@ -44,7 +44,7 @@ jobs:
                      sudo systemctl start docker
                      sudo systemctl enable docker
 
-                     echo "${{ secrets.DOCKERHUB_TOKEN }}" | sudo docker login -u "${{ vars.DOCKER_USERNAME }}" --password-stdin
+                     echo "${{ secrets.DOCKERHUB_TOKEN }}" | sudo docker login -u "${{ vars.DOCKERHUB_USERNAME }}" --password-stdin
 
                      cd ~/devops
                      sudo docker-compose up -d --build --force-recreate --pull always
