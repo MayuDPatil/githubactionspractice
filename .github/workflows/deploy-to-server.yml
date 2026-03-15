@@ -7,8 +7,11 @@ jobs:
     deploy:
         runs-on: ubuntu-latest
         steps:
+            - name: code checkout
+              uses: actions/codecheckout@v4
+
             - name: deploy-to-server
-              uses: appleboy/ssh-action@master
+              uses: appleboy/ssh-action@v1
               with:
                 host: ${{ secrets.ec2_HOST }}
                 username: ${{ secrets.USERNAME }}
@@ -16,5 +19,26 @@ jobs:
                 script: |
                    echo "Deploying to server..."
                    mkdir -p devops
-                
+            
+            - name: copy docker compose file to server
+              uses: appleboy/scp-action@v1
+              with:
+                host: ${{ secrets.ec2_HOST }}
+                username: ${{ secrets.USERNAME }}
+                Key: ${{ secrets.PRIVATE_KEY }}
+                source: "docker-compose.yml"
+                target: "devops/docker-compose.yml"
+
+            - name: run docker compose on server
+              uses: appleboy/ssh-action@v1
+              with:
+                host: ${{ secrets.ec2_HOST }}
+                username: ${{ secrets.USERNAME }}
+                Key: ${{ secrets.PRIVATE_KEY }}
+                script: |
+                   echo "Running docker compose on server..."
+                   sudo apt-get install -y docker-compose docker.io
+                   sudo usermod -aG docker $USER
+                   echo ${{secrets.DOCKERHUB_TOKEN}} | docker login -u ${{vars.DOCKER_USERNAME}} --password-stdin 
+                   cd ~/devops && docker compose up -d --build --force-recreate --pull always
 
