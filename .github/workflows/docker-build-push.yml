@@ -2,7 +2,9 @@ name: docker build and push
 
 on : 
     workflow_call:
-
+env:
+    DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+    DOCKER_TAG: ${{github.sha}}
 jobs:
     build-and-push:
         runs-on: ubuntu-latest
