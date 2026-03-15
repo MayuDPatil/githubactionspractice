@@ -6,11 +6,10 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-
     env:
-      DOCKERHUB_USER: ${{ vars.DOCKERHUB_USERNAME }}
+      DOCKERHUB_USERNAME: ${{ vars.DOCKERHUB_USERNAME }}
       DOCKER_TAG: ${{ github.sha }}
-
+      
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -50,8 +49,10 @@ jobs:
           key: ${{ secrets.PRIVATE_KEY }}
           script: |
             echo "Starting application"
+            export DOCKERHUB_USER=${{ vars.DOCKERHUB_USERNAME }}
+            export DOCKER_TAG=${{ github.sha }}
 
-            echo "${{ secrets.DOCKERHUB_TOKEN }}" | sudo docker login --username "${{ vars.DOCKERHUB_USER }}" --password-stdin
+            echo "${{ secrets.DOCKERHUB_TOKEN }}" | sudo docker login --username "${{ vars.DOCKERHUB_USERNAME }}" --password-stdin
 
             cd ~/devops
 
