@@ -27,7 +27,7 @@ jobs:
                 username: ${{ secrets.USERNAME }}
                 Key: ${{ secrets.PRIVATE_KEY }}
                 source: "docker-compose.yml"
-                target: "devops/docker-compose.yml"
+                target: "~/devops/"
 
             - name: run docker compose on server
               uses: appleboy/ssh-action@v1
@@ -36,9 +36,16 @@ jobs:
                 username: ${{ secrets.USERNAME }}
                 Key: ${{ secrets.PRIVATE_KEY }}
                 script: |
-                   echo "Running docker compose on server..."
-                   sudo apt-get update &&sudo apt-get install -y docker-compose docker.io
-                   sudo usermod -aG docker $USER
-                   echo ${{secrets.DOCKERHUB_TOKEN}} | docker login -u ${{vars.DOCKER_USERNAME}} --password-stdin 
-                   cd ~/devops && docker-compose up -d --build --force-recreate --pull always
+                     echo "Running docker compose on server..."
+
+                     sudo apt-get update
+                     sudo apt-get install -y docker.io docker-compose
+
+                     sudo systemctl start docker
+                     sudo systemctl enable docker
+
+                     echo "${{ secrets.DOCKERHUB_TOKEN }}" | sudo docker login -u "${{ vars.DOCKER_USERNAME }}" --password-stdin
+
+                     cd ~/devops
+                     sudo docker-compose up -d --build --force-recreate --pull always
 
