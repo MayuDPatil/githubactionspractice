@@ -40,5 +40,5 @@ jobs:
                    sudo apt-get update &&sudo apt-get install -y docker-compose docker.io
                    sudo usermod -aG docker $USER
                    echo ${{secrets.DOCKERHUB_TOKEN}} | docker login -u ${{vars.DOCKER_USERNAME}} --password-stdin 
-                   cd ~/devops && docker compose up -d --build --force-recreate --pull always
+                   cd ~/devops && docker-compose up -d --build --force-recreate --pull always
 
