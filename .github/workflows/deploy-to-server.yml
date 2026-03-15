@@ -9,7 +9,7 @@ jobs:
     env:
       DOCKERHUB_USERNAME: ${{ vars.DOCKERHUB_USERNAME }}
       DOCKER_TAG: ${{ github.sha }}
-      
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -21,13 +21,6 @@ jobs:
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.PRIVATE_KEY }}
           script: |
-            echo "Installing Docker"
-            sudo apt-get update
-            sudo apt-get install -y docker.io docker-compose-v2
-
-            sudo systemctl start docker
-            sudo systemctl enable docker
-
             rm -rf ~/devops/docker-compose.yml
             mkdir -p ~/devops
 
