@@ -18,4 +18,6 @@ COPY --from=builder /app /app
 
 ENV PYTHONPATH=/app/dependency
 
-CMD ["main.py"]
+EXPOSE 5000
+
+CMD ["gunicorn", "-b", "0.0.0.0:5000", "main:app"]
