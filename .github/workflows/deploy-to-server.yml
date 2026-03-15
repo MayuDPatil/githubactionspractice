@@ -8,7 +8,7 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - name: code checkout
-              uses: actions/codecheckout@v4
+              uses: actions/checkout@v4
 
             - name: deploy-to-server
               uses: appleboy/ssh-action@v1
@@ -37,7 +37,7 @@ jobs:
                 Key: ${{ secrets.PRIVATE_KEY }}
                 script: |
                    echo "Running docker compose on server..."
-                   sudo apt-get install -y docker-compose docker.io
+                   sudo apt-get update &&sudo apt-get install -y docker-compose docker.io
                    sudo usermod -aG docker $USER
                    echo ${{secrets.DOCKERHUB_TOKEN}} | docker login -u ${{vars.DOCKER_USERNAME}} --password-stdin 
                    cd ~/devops && docker compose up -d --build --force-recreate --pull always
