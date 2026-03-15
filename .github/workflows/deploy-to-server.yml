@@ -31,18 +31,18 @@ jobs:
             - name: Copy the docker-compose file
               uses: appleboy/scp-action@v1
               with:
-                host: ${{ secrets.EC2_SSH_HOST }}
-                username: ${{ secrets.EC2_SSH_USER }}
-                key: ${{ secrets.EC2_SSH_PRIVATE_KEY }}
+                host: ${{ secrets.EC2_HOST }}
+                username: ${{ secrets.USERNAME }}
+                key: ${{ secrets.PRIVATE_KEY }}
                 source: docker-compose.yml
                 target: ~/devops
                 
             - name: SSH to Prod server & run the app
               uses: appleboy/ssh-action@v1.0.3
               with:
-                host: ${{ secrets.EC2_SSH_HOST }}
-                username: ${{ secrets.EC2_SSH_USER }}
-                key: ${{ secrets.EC2_SSH_PRIVATE_KEY }}
+                host: ${{ secrets.EC2_HOST }}
+                username: ${{ secrets.USERNAME }}
+                key: ${{ secrets.PRIVATE_KEY }}
                 script: |
                  echo "Running App"
                 
